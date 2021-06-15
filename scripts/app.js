@@ -8,14 +8,24 @@ const icon = document.querySelector('.icon img');
 const updateUI = (data) => {
     const cityDetails = data.cityDetails;
     const weather = data.weather;
+    let exact = weather.LocalObservationDateTime.slice(11, 19);
+    let date = weather.LocalObservationDateTime.slice(0, 10);
+
 
     details.innerHTML = `
         <h5 class="my-3">${cityDetails.EnglishName}</h5>
         <div class="my-3">${weather.WeatherText}</div>
-        <div class="display-4 my-4">
+        <div class="display-5 my-2">
             <span>${weather.Temperature.Metric.Value}</span>
             <span>&deg;C</span>
+            <span>||</span>
+            <span>${weather.Temperature.Imperial.Value}</span>
+            <span>&deg;F</span>
         </div>
+        <div class="display-5 my-2">
+            <span>${exact}</span>
+        </div>
+        <div class="my-3">${date}</div>
     `;
 
     let iconSource = `img/icons/${weather.WeatherIcon}.svg`;
@@ -23,9 +33,9 @@ const updateUI = (data) => {
 
     let imgSource = null;
     if(weather.IsDayTime) {
-        imgSource = 'img/day.svg'
+        imgSource = 'img/day.jpg'
     } else {
-        imgSource = 'img/night.svg'
+        imgSource = 'img/night.jpg'
     }
     time.setAttribute('src', imgSource);
     
